@@ -1,15 +1,19 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
-import App from './App.vue'
+import { VueQueryPlugin } from '@tanstack/vue-query'
 import router from './router'
-import './style.css' 
+import App from './App.vue'
+import './style.css'
 
 const app = createApp(App)
 
-app.use(createPinia())
-app.use(router)
+// Global error handler (replaces ErrorBoundary class)
+app.config.errorHandler = (err, info) => {
+  console.error('Global Error:', err, info)
+}
 
-app.mount('#app')
+app
+  .use(createPinia())
+  .use(router)
+  .use(VueQueryPlugin)
+  .mount('#app')
